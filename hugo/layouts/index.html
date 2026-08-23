@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta property="og:title" content="cirrata.github.io" />
+  <meta property="og:description" content="description" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://cirrata.github.io" />
+  <meta name="twitter:card" content="summary_large_image" />
+  {{ $featured := resources.Get "/logo/cirrata-card.png" }}
+
+  {{ $font := resources.Get "/opengraph/poppins-bold.ttf" }}
+  {{ $descPadding := 0 }}
+  {{ $title := "Cirrata" }}
+  {{ $sizeTitle := 80 }}
+  {{ $sizeDesc := 50 }}
+  {{ if gt (len $title) 23 }}
+      {{ $sizeTitle = 60 }}
+  {{ end }}
+  {{ $textTitle := $title }}
+  {{ $textTitleOptions := dict
+      "color" "#f9f1f1"
+      "size" $sizeTitle
+      "lineSpacing" 10
+      "x" 65 "y" 180
+      "font" $font
+  }}
+  {{ $filters := slice (images.Text $textTitle $textTitleOptions) }}
+  {{ if gt ($title | strings.RuneCount) 23 }}
+  {{ $descPadding = -30 }}
+      {{ if gt ($title | strings.RuneCount) 40 }}
+          {{ $descPadding = 40 }}
+      {{ end }}
+      {{ $sizeDesc = 45 }}
+  {{ end }}
+  {{ $description := "One Friendly Bot" }}
+  {{ with $description }}
+      {{ $textDesc := $description }}
+      {{ $textDescOptions := dict
+          "color" "#f9f1f1"
+          "size" $sizeDesc
+          "lineSpacing" 10
+          "x" 65 "y" (add 290 $descPadding)
+          "font" $font
+      }}
+      {{ $descFilter := (images.Text $textDesc $textDescOptions) }}
+      {{ $filters = $filters | append $descFilter }}
+  {{ end }}
+  {{ $textSiteTitle := $.Site.Title }}
+  {{ with $textSiteTitle }}
+      {{ $textSiteTitleOptions := dict
+          "color" "#f9f1f1"
+          "size" 35
+          "lineSpacing" 10
+          "x" 65 "y" 550
+          "font" $font
+      }}
+      {{ $siteTitleFilter := (images.Text $textSiteTitle $textSiteTitleOptions)}}
+      {{ $filters = $filters | append $siteTitleFilter }}
+  {{ end }}
+  {{ $featured = $featured | images.Filter $filters }}
+  <meta property="og:image" content="{{ $featured.Permalink }}"/>
+  <meta name="twitter:image" content="{{ $featured.Permalink }}"/>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cirrata</title>
+  <style>
+    body {
+      background: #710000 url('landing/background.png') center no-repeat;
+      color: #428bca;
+      font-family: 'Courier New', Courier, monospace;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      color: #f9f1f1;
+      text-shadow: 2px 2px 5px #3e0000;
+    }
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #181921;
+      border: 2px dashed #428bca;
+      border-radius: 8px;
+      box-shadow: 0 0 20px #428bca;
+    }
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+    }
+    button {
+      background-color: #428bca;
+      border: none;
+      color: #f9f1f1;
+      padding: 15px 30px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-radius: 8px;
+    }
+    button:hover {
+      box-shadow: 0 0 10px #428bca;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to Cirrata</h1>
+    <div class="buttons">
+      <a href="https://github.com/cirrata" target="_blank">
+        <button><img src="landing/github-mark.svg" alt="GitHub Repo" width="40" height="40"></button>
+      </a>
+      <a href="https://cirrata.github.io/docs" target="_blank">
+        <button><img src="landing/docs.svg" alt="Documentation" width="40" height="40"></button>
+      </a>
+    </div>
+  </div>
+</body>
+</html>
